@@ -1,0 +1,24 @@
+# Javascript Node CircleCI 2.0 configuration file
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: kriasoft/node-ci:8.3.0-alpine
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - setup_remote_docker
+      # Download and cache dependencies
+      - restore_cache:
+          key: npm-cache-{{ checksum "package-lock.json" }}
+      - run: npm install
+      - save_cache:
+          key: npm-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      # Run unit tests
+      - run: npm run lint
+      - run: npm run test

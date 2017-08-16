@@ -1,6 +1,4 @@
-# [Pre-render](https://www.npmjs.com/package/pre-render)
-
-
+# `pre-render` &nbsp; [![NPM Package](https://img.shields.io/npm/v/pre-render.svg?style=flat-square)](https://www.npmjs.com/package/pre-render) [![NPM Downloads](http://img.shields.io/npm/dm/pre-render.svg?style=flat-square)](https://www.npmjs.com/package/pre-render) [![NPM Dependencies](https://david-dm.org/kriasoft/pre-render.svg?style=flat-square)](https://npmjs.org/package/pre-render)
 
 Instead of building an [isomoprhic app][rsk] (with SSR - server-side rendering), it's sometimes
 easier to create a normal single-page web application ([SPA][spa]) by using a modern front-end
