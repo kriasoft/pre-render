@@ -1,25 +1,29 @@
 # [Pre-render](https://www.npmjs.com/package/pre-render)
 
-It's often easier to create a normal single-page web application ([SPA][spa]) than an isomorphic
-app (using server-side rendering technique or SSR) by using [React][react], [Vue.js][vue] etc (see
-[example][rsb]). But what about SEO, initial page load time, and other optimizations?
 
-The goal of this project is to alow you generate static `.html` pages for your single-page app.
-You just build your project as normal, assuming that it compiles into the `/build` (or `/dist`)
-folder, then prepare the list of relative URL paths that need to be pre-rendred and pass that info
-to **`pre-render`**, it will load `/build/index.html` in a headless Chrome browser, iterate over
-the list of provided URL path strings and save each page to a corresponding `.html` file.
+
+Instead of building an [isomoprhic app][rsk] (with SSR - server-side rendering), it's sometimes
+easier to create a normal single-page web application ([SPA][spa]) by using a modern front-end
+library such as [React][react], [Vue.js][vue] etc (see [example][rsb]). But what about [SEO][seo],
+initial page load time, and other optimizations?
+
+The goal of this project is to generate static `.html` pages for your single-page app at build time,
+before you deploy it to a [CDN][cdn] hosting. You just build your project as normal, assuming that
+it compiles into the `/build` (or `/dist`) folder, then prepare the list of relative URL paths that
+need to be pre-rendred and pass that info to **`pre-render`**, it will load `/build/index.html` in a
+headless Chrome browser, iterate over the list of provided relative URLs and save each page to a
+corresponding `.html` file.
 
 ### How to Use
 
 You need to tweak your app, to expose `window.prerender` handler, that may look something like this:
 
 ```js
-window.preprender = (path) => new Promise(resolve => {
+window.preprender = async path => {
   history.push(path);
   /* make sure that the client-side rendering is complete, then */
-  resolve(document.documentElement.outerHTML);
-});
+  return document.documentElement.outerHTML;
+};
 ```
 
 Then build your project (`npm run build`) and run the following script:
@@ -35,7 +39,7 @@ prerender('./build', [
 ```
 
 Now, you can deploy the contents of the `/build` folder to GitHub Pages, Firebase, or some other CDN
-hosting, yet making sure that the search engines will be able to crawl your site.
+hosting, yet search engines will *still* be able to crawl your site.
 
 ### License
 
@@ -48,4 +52,7 @@ Made with ♥ by Konstantin Tarkus ([@koistya](https://twitter.com/koistya), [bl
 [spa]: https://en.wikipedia.org/wiki/Single-page_application
 [react]: https://facebook.github.io/react/
 [vue]: https://vuejs.org/
+[cdn]: https://en.wikipedia.org/wiki/Content_delivery_network
+[rsk]: https://github.com/kriasoft/react-starter-kit
 [rsb]: https://github.com/kriasoft/react-static-boilerplate
+[seo]: https://en.wikipedia.org/wiki/Search_engine_optimization
